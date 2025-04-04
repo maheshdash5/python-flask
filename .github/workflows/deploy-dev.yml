@@ -36,5 +36,5 @@ jobs:
       run: |
         docker build -t maheshkumardash/flask-app:1.0.0 .
         docker login --username=${{ secrets.DOCKERUSERNAME }} --password=${{ secrets.DOCKERPASSWORD }}
-        docker push maheshkumardash/flask-app:1.0.0 .
+        docker push maheshkumardash/flask-app:1.0.0
     
