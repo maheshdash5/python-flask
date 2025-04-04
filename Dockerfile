@@ -19,5 +19,5 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Command to run the application
-CMD ["python", "run.py"]
-
+#CMD ["python", "run.py"]
+CMD ["gunicorn", "run:app", "--bind", "0.0.0.0:5500", "--workers", "2"]
