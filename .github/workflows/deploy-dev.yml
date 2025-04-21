@@ -8,8 +8,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -44,20 +42,37 @@ jobs:
         name: report
         path: report.html
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
 
-    - name: Upload to GitHub Pages
-      uses: actions/upload-pages-artifact@v2
-      with:
-        path: .  # Current directory (contains report.html)
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v2
+      - name: Download report artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: report
 
-    - name: Build Docker Image and Push to DockerHub
-      run: |
-        SHA=$(git rev-parse --short HEAD)
-        docker build -t maheshkumardash/flask-app:$SHA .
-        docker login --username=${{ secrets.DOCKERUSERNAME }} --password=${{ secrets.DOCKERPASSWORD }}
-        docker push maheshkumardash/flask-app:$SHA
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: .  # Current directory (contains report.html)
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+
+      - name: Build Docker Image and Push to DockerHub
+        run: |
+          SHA=$(git rev-parse --short HEAD)
+          docker build -t maheshkumardash/flask-app:$SHA .
+          docker login --username=${{ secrets.DOCKERUSERNAME }} --password=${{ secrets.DOCKERPASSWORD }}
+          docker push maheshkumardash/flask-app:$SHA
