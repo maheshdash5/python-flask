@@ -1,4 +1,4 @@
-name: Deploy to Develop Cluster
+name: Deploy to Development Cluster
 
 on:
   push:
@@ -25,12 +25,12 @@ jobs:
         source flask-local-test/bin/activate
         pip install -r requirements.txt
 
-#    - name: Unit Test
-#      run: |
-#        pytest test.py
-#        coverage run -m pytest test.py
-#        coverage report -m
-#
+    - name: Unit Test
+      run: |
+        pytest test.py
+        coverage run -m pytest test.py
+        coverage report -m
+
 
     - name: Build Docker Image and Push to DockerHub
       run: |
