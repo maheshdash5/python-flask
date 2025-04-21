@@ -21,6 +21,7 @@ jobs:
         
     - name: Install dependencies
       run: |
+        pip install --upgrade pip
         python -m venv flask-local-test
         source flask-local-test/bin/activate
         pip install -r requirements.txt
