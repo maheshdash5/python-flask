@@ -8,14 +8,18 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
     - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: "3.10"
         
@@ -34,10 +38,27 @@ jobs:
         coverage run -m pytest test.py
         coverage report -m
 
+    - name: Upload report as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: report
+        path: report.html
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+
+    - name: Upload to GitHub Pages
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: .  # Current directory (contains report.html)
+
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v2
 
     - name: Build Docker Image and Push to DockerHub
       run: |
-        docker build -t maheshkumardash/flask-app:1.0.0 .
+        SHA=$(git rev-parse --short HEAD)
+        docker build -t maheshkumardash/flask-app:$SHA .
         docker login --username=${{ secrets.DOCKERUSERNAME }} --password=${{ secrets.DOCKERPASSWORD }}
-        docker push maheshkumardash/flask-app:1.0.0
+        docker push maheshkumardash/flask-app:$SHA
     
