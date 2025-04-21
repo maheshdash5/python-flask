@@ -61,4 +61,3 @@ jobs:
         docker build -t maheshkumardash/flask-app:$SHA .
         docker login --username=${{ secrets.DOCKERUSERNAME }} --password=${{ secrets.DOCKERPASSWORD }}
         docker push maheshkumardash/flask-app:$SHA
-    
