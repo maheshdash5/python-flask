@@ -56,21 +56,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download report artifact
-        uses: actions/download-artifact@v3
+      - name: Download report
+        uses: actions/download-artifact@v4
         with:
           name: report
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5.0.0
+        uses: actions/configure-pages@v3
 
-      - name: Download report artifact
-        uses: actions/download-artifact@v4
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
         with:
-          name: report
-          
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4.0.5
+          path: .  # Contains report.html
+
+      - name: Deploy
+        uses: actions/deploy-pages@v2
 
       - name: Build Docker Image and Push to DockerHub
         run: |
