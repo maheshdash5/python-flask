@@ -27,6 +27,7 @@ jobs:
 
     - name: Unit Test
       run: |
+        source flask-local-test/bin/activate
         pytest test.py
         coverage run -m pytest test.py
         coverage report -m
