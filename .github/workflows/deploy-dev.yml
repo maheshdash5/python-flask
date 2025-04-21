@@ -37,9 +37,7 @@ jobs:
           source flask-local-test/bin/activate
           pytest test.py
           mkdir report
-          cd report
-          pytest test.py --html=report.html
-          cat report.html
+          pytest test.py --html=report/report.html
           coverage run -m pytest test.py
           coverage report -m
 
