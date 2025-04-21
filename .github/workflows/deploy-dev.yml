@@ -29,6 +29,7 @@ jobs:
       run: |
         source flask-local-test/bin/activate
         pytest test.py
+        pytest test.py --html=report.html
         coverage run -m pytest test.py
         coverage report -m
 
