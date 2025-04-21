@@ -37,10 +37,10 @@ jobs:
           source flask-local-test/bin/activate
           pytest test.py
           pytest test.py --html=report.html
-          cat report.html
+          ls
+          tree
           coverage run -m pytest test.py
           coverage report -m
-          source flask-local-test/bin/deactivate
 
 #      - name: Setup Pages
 #        uses: actions/configure-pages@v3
